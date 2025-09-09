@@ -71,13 +71,13 @@ class PaperCompliantPipeline:
         from data_loader import YFinanceDataLoader
         self.data_loader = YFinanceDataLoader()
         
-    def load_market_data_by_code(self, market_code: str = "RELIANCE") -> tuple:
-        """Load Indian market data (Reliance only) using paper-compliant parameters."""
-        if market_code != "RELIANCE":
-            print(f"Warning: Only RELIANCE (Indian) market supported. Using RELIANCE instead of {market_code}")
-            market_code = "RELIANCE"
+    def load_market_data_by_code(self, market_code: str = "IRFC") -> tuple:
+        """Load Indian market data (IRFC only) using paper-compliant parameters."""
+        if market_code != "IRFC":
+            print(f"Warning: Only IRFC (Indian) market supported. Using IRFC instead of {market_code}")
+            market_code = "IRFC"
             
-        print(f"Loading Indian market data (Reliance Industries)...")
+        print(f"Loading Indian market data (IRFC - Indian Railway Finance Corporation)...")
         
         # Use paper timeframe if specified in config
         if self.config.get('use_paper_timeframe', False):
@@ -116,14 +116,14 @@ class PaperCompliantPipeline:
         
         return features_df, price_df['close'], filtered_prices
         
-    def load_real_market_data(self, symbol: str = "RELIANCE.NS", years: int = 17) -> tuple:
+    def load_real_market_data(self, symbol: str = "IRFC.NS", years: int = 17) -> tuple:
         """Load real market data from Yahoo Finance (legacy method - now Indian only)."""
-        # All symbols now map to RELIANCE (Indian only)
-        return self.load_market_data_by_code("RELIANCE")
+        # All symbols now map to IRFC (Indian only)
+        return self.load_market_data_by_code("IRFC")
         
     def generate_synthetic_data(self, n_samples: int = 4000) -> tuple:
         """Generate realistic synthetic stock market data."""
-        print("Generating synthetic Reliance stock data...")
+        print("Generating synthetic IRFC stock data...")
         
         np.random.seed(42)  # For reproducibility
         
@@ -132,7 +132,7 @@ class PaperCompliantPipeline:
         dates = pd.bdate_range(start=start_date, periods=n_samples)
         
         # Generate realistic price series (adapted for Indian stock)
-        initial_price = 300.0       # Starting price for Reliance (₹)
+        initial_price = 26.0        # Starting price for IRFC (₹)
         daily_return_mean = 0.0012  # ~30% annual return (Indian market)
         daily_return_std = 0.018    # ~28% annual volatility (Indian market)
         
@@ -607,7 +607,7 @@ def main():
         "data_dir": "data",
         "results_dir": args.output,
         "symbol": "^GSPC",  # Legacy support
-        "market": "RELIANCE",  # Indian market focus only
+        "market": "IRFC",  # Indian market focus only
         "use_bayesian_optimization": True,  # Enable Bayesian optimization
         "bayesian_n_calls": 50,  # Number of Bayesian optimization calls
         "bayesian_quick_mode": False,  # Use quick mode for testing
@@ -632,7 +632,7 @@ def main():
             "batch_size": 32,
             "learning_rate": 1e-3,
             "optimizer": "adamax",  # Paper-compliant
-            "patience": 20
+            "patience": None
         },
         "plstm_tal": {
             "hidden_size": 64,  # Paper-compliant: Units=64
@@ -677,7 +677,7 @@ def main():
     pipeline = PaperCompliantPipeline(config)
     
     # Run USA market analysis with Bayesian optimization
-    print(f"Running analysis on USA market (S&P 500) with Bayesian optimization...")
+    print(f"Running analysis on IRFC stock (Indian Railway Finance Corporation) with Bayesian optimization...")
     if config.get('use_bayesian_optimization', True):
         print("✅ Bayesian hyperparameter optimization enabled")
     else:
@@ -686,7 +686,7 @@ def main():
     results, comparison = pipeline.run_experiment()
     
     print("\n" + "="*60)
-    print("USA MARKET EXPERIMENT COMPLETED SUCCESSFULLY!")
+    print("IRFC STOCK MARKET EXPERIMENT COMPLETED SUCCESSFULLY!")
     print("="*60)
 
 

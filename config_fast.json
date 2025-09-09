@@ -1,7 +1,8 @@
 {
   "data_dir": "data",
   "results_dir": "results_fast",
-  "symbol": "^GSPC",
+  "symbol": "IRFC.NS",
+  "market": "IRFC",
   "data_years": 10,
   "use_paper_compliant_labeling": true,
   "use_exact_40_indicators": true,
@@ -20,7 +21,7 @@
     "epochs": 100,
     "batch_size": 32,
     "learning_rate": 1e-3,
-    "patience": 20
+    "patience": null
   },
   "plstm_tal": {
     "hidden_size": 64,

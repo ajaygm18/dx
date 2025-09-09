@@ -281,7 +281,7 @@ class ModelTrainer:
             batch_size: Batch size
             learning_rate: Learning rate
             optimizer_name: Optimizer type ('adamax', 'adam', 'sgd')
-            early_stopping_patience: Early stopping patience
+            early_stopping_patience: Early stopping patience (None to disable)
             
         Returns:
             Training history
@@ -341,25 +341,33 @@ class ModelTrainer:
                 history['val_loss'].append(val_metrics['loss'])
                 history['val_accuracy'].append(val_metrics['accuracy'])
                 
-                # Early stopping check
-                if val_metrics['loss'] < best_val_loss:
-                    best_val_loss = val_metrics['loss']
-                    patience_counter = 0
-                    best_model_state = self.model.state_dict().copy()
+                # Early stopping check (only if patience is not None/0)
+                if early_stopping_patience is not None and early_stopping_patience > 0:
+                    if val_metrics['loss'] < best_val_loss:
+                        best_val_loss = val_metrics['loss']
+                        patience_counter = 0
+                        best_model_state = self.model.state_dict().copy()
+                    else:
+                        patience_counter += 1
+                    
+                    # Early stopping
+                    if patience_counter >= early_stopping_patience:
+                        print(f"Early stopping at epoch {epoch+1}")
+                        break
                 else:
-                    patience_counter += 1
-                
+                    # No early stopping - always save best model based on validation loss
+                    if val_metrics['loss'] < best_val_loss:
+                        best_val_loss = val_metrics['loss']
+                        best_model_state = self.model.state_dict().copy()
+                        
                 if (epoch + 1) % 10 == 0:
+                    patience_info = f", Patience: {patience_counter}/{early_stopping_patience}" if early_stopping_patience else " (No early stopping)"
                     print(f"Epoch {epoch+1}/{epochs}: "
                           f"Train Loss: {train_metrics['loss']:.4f}, "
                           f"Train Acc: {train_metrics['accuracy']:.4f}, "
                           f"Val Loss: {val_metrics['loss']:.4f}, "
-                          f"Val Acc: {val_metrics['accuracy']:.4f}")
+                          f"Val Acc: {val_metrics['accuracy']:.4f}{patience_info}")
                 
-                # Early stopping
-                if patience_counter >= early_stopping_patience:
-                    print(f"Early stopping at epoch {epoch+1}")
-                    break
             else:
                 if (epoch + 1) % 10 == 0:
                     print(f"Epoch {epoch+1}/{epochs}: "

@@ -12,21 +12,21 @@ warnings.filterwarnings('ignore')
 class IndianMarketDataLoader:
     """Loads data from Indian market (Reliance Industries) - focused implementation."""
     
-    # Indian market focus - Reliance Industries
+    # Indian market focus - IRFC (Indian Railway Finance Corporation)
     INDIAN_MARKET = {
-        'RELIANCE': 'RELIANCE.NS',    # Reliance Industries (NSE) - Primary focus
+        'IRFC': 'IRFC.NS',    # Indian Railway Finance Corporation (NSE) - Primary focus
     }
     
     def __init__(self):
         """Initialize Indian market data loader."""
         pass
     
-    def download_market_data(self, market_code: str = "RELIANCE", start_date: str = "2005-01-01", end_date: str = "2022-03-31") -> pd.DataFrame:
+    def download_market_data(self, market_code: str = "IRFC", start_date: str = "2005-01-01", end_date: str = "2022-03-31") -> pd.DataFrame:
         """
-        Download Reliance Industries data (Indian market).
+        Download IRFC (Indian Railway Finance Corporation) data (Indian market).
         
         Args:
-            market_code: Market code (only 'RELIANCE' supported)
+            market_code: Market code (only 'IRFC' supported)
             start_date: Start date in 'YYYY-MM-DD' format (default: paper start)
             end_date: End date in 'YYYY-MM-DD' format (default: paper end)
             
@@ -34,8 +34,8 @@ class IndianMarketDataLoader:
             DataFrame with OHLCV data
         """
         if market_code not in self.INDIAN_MARKET:
-            print(f"Warning: Only RELIANCE (Indian) market supported. Using RELIANCE instead of {market_code}")
-            market_code = "RELIANCE"
+            print(f"Warning: Only IRFC (Indian) market supported. Using IRFC instead of {market_code}")
+            market_code = "IRFC"
         
         symbol = self.INDIAN_MARKET[market_code]
         print(f"Downloading Indian market data ({symbol}) from {start_date} to {end_date}...")
@@ -55,7 +55,7 @@ class IndianMarketDataLoader:
             if not all(col in data.columns for col in required_cols):
                 raise ValueError(f"Missing required columns for {market_code}")
             
-            print(f"✓ Downloaded {len(data)} samples for Indian market (RELIANCE)")
+            print(f"✓ Downloaded {len(data)} samples for Indian market (IRFC)")
             return data[required_cols]
             
         except Exception as e:
@@ -64,7 +64,7 @@ class IndianMarketDataLoader:
     
     def download_indian_market(self, start_date: str = "2005-01-01", end_date: str = "2022-03-31") -> pd.DataFrame:
         """
-        Download Indian market data (Reliance Industries) with paper-compliant timeframe.
+        Download Indian market data (IRFC - Indian Railway Finance Corporation) with paper-compliant timeframe.
         
         Args:
             start_date: Start date (paper default: 2005-01-01)
@@ -73,17 +73,17 @@ class IndianMarketDataLoader:
         Returns:
             DataFrame with OHLCV data
         """
-        print(f"Downloading Indian market (Reliance Industries) data from {start_date} to {end_date}...")
-        return self.download_market_data("RELIANCE", start_date, end_date)
+        print(f"Downloading Indian market (IRFC - Indian Railway Finance Corporation) data from {start_date} to {end_date}...")
+        return self.download_market_data("IRFC", start_date, end_date)
     
     def get_market_info(self) -> Dict[str, Dict]:
-        """Get information about Indian market (Reliance)."""
+        """Get information about Indian market (IRFC)."""
         return {
-            'RELIANCE': {
-                'name': 'Reliance Industries Limited',
+            'IRFC': {
+                'name': 'Indian Railway Finance Corporation Limited',
                 'country': 'India',
-                'symbol': 'RELIANCE.NS',
-                'description': 'Reliance Industries - Indian Market Focus'
+                'symbol': 'IRFC.NS',
+                'description': 'IRFC - Indian Railway Finance Corporation - Indian Market Focus'
             }
         }
 
