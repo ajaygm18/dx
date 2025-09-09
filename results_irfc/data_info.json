@@ -1,0 +1,15 @@
+{
+  "market_code": "IRFC",
+  "total_samples": 289,
+  "features_count": 46,
+  "data_range": {
+    "start": "2021-01-29",
+    "end": "2022-03-30"
+  },
+  "price_statistics": {
+    "min": 18.4306640625,
+    "max": 22.894683837890625,
+    "mean": 20.831536606521343,
+    "std": 0.9315433979856403
+  }
+}

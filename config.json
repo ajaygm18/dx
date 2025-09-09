@@ -1,8 +1,8 @@
 {
   "data_dir": "data",
   "results_dir": "results",
-  "symbol": "RELIANCE.NS",
-  "market": "RELIANCE",
+  "symbol": "IRFC.NS",
+  "market": "IRFC",
   "use_bayesian_optimization": true,
   "bayesian_n_calls": 50,
   "bayesian_quick_mode": false,
@@ -33,7 +33,7 @@
     "batch_size": 32,
     "learning_rate": 1e-3,
     "optimizer": "adamax",
-    "patience": 20
+    "patience": 9999
   },
   "plstm_tal": {
     "hidden_size": 64,
