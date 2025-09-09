@@ -1,8 +1,8 @@
 {
   "data_dir": "data",
   "results_dir": "results_complete_run",
-  "symbol": "^GSPC",
-  "market": "SP500",
+  "symbol": "IRFC.NS",
+  "market": "IRFC",
   "use_bayesian_optimization": true,
   "bayesian_n_calls": 20,
   "bayesian_quick_mode": false,
@@ -32,7 +32,7 @@
     "batch_size": 32,
     "learning_rate": 1e-3,
     "optimizer": "adamax",
-    "patience": 10
+    "patience": 9999
   },
   "plstm_tal": {
     "hidden_size": 64,

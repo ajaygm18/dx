@@ -1,0 +1,15 @@
+{
+  "market_code": "IRFC",
+  "total_samples": 492,
+  "features_count": 46,
+  "data_range": {
+    "start": "2023-09-11",
+    "end": "2025-09-08"
+  },
+  "price_statistics": {
+    "min": 68.3741683959961,
+    "max": 214.07054138183594,
+    "mean": 136.02403834583313,
+    "std": 31.634813191057425
+  }
+}
